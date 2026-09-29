@@ -973,41 +973,11 @@ p {
   gap: 20px;
 }
 .trust-badge {
-  width: 94px;
-  height: 58px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 6px;
-  color: #fff;
-  font-family: var(--font-body);
-}
-.trust-badge b {
-  font-size: 16px;
-  line-height: 1.1;
-}
-.trust-badge small {
-  margin-top: 3px;
-  font-size: 8px;
-  letter-spacing: 0.6px;
-}
-.trust-badge--dmca b {
-  font-size: 15px;
-  letter-spacing: 1px;
-}
-.trust-badge--seal b {
-  width: 23px;
-  height: 23px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #fff;
-  border-radius: 50%;
-  font-size: 13px;
-}
-.trust-badge--quality b {
-  font-size: 10px;
+  width: 96px;
+  height: 70px;
+  display: block;
+  flex: 0 1 auto;
+  object-fit: contain;
 }
 .legal-copy {
   max-width: 1200px;
@@ -1521,18 +1491,6 @@ p {
     width: 25%;
     max-width: 76px;
     height: 52px;
-  }
-  .trust-badge b {
-    font-size: 13px;
-  }
-  .trust-badge small {
-    font-size: 6px;
-  }
-  .trust-badge--dmca b {
-    font-size: 12px;
-  }
-  .trust-badge--quality b {
-    font-size: 8px;
   }
   .legal-copy {
     margin: 0 auto 20px;
