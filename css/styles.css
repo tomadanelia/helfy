@@ -3,6 +3,7 @@
   --ink: #08080a;
   --muted: #616975;
   --green: #008935;
+  --star-gold: #d99a00;
   --deep-green: #154b3e;
   --pale-green: #e8f2e4;
   --soft-green: #f1f7ef;
@@ -382,24 +383,16 @@ p {
   font-size: 16px;
   white-space: nowrap;
 }
-.shield {
+.trustedshops-icon {
   width: 27px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: var(--green);
-  clip-path: polygon(50% 0, 94% 15%, 88% 68%, 50% 100%, 12% 68%, 6% 15%);
-  font-size: 13px;
-}
-.shield span {
-  margin-top: -2px;
+  height: 26px;
+  flex: 0 0 auto;
 }
 .trust-row__label {
   margin-right: 7px;
 }
 .stars {
-  color: #15967c;
+  color: var(--star-gold);
   font-size: 21px;
   letter-spacing: 1px;
 }
@@ -545,7 +538,7 @@ p {
 }
 .review-card__stars {
   margin: 24px 0 16px;
-  color: #269c6e;
+  color: var(--star-gold);
   font-size: 20px;
   letter-spacing: 3px;
 }
@@ -1221,10 +1214,9 @@ p {
     margin: 17px -10px 21px;
     font-size: 12px;
   }
-  .shield {
+  .trustedshops-icon {
     width: 22px;
-    height: 26px;
-    font-size: 11px;
+    height: 21px;
   }
   .trust-row__label {
     margin-right: 3px;
