@@ -439,13 +439,14 @@ p {
 }
 .hero__person {
   position: absolute;
+  right: 0;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
+  left: 0;
+  width: 100%;
   height: 100%;
   max-width: 100%;
   object-fit: contain;
+  object-position: center bottom;
 }
 .hero__person:not([src]),
 .asset-image.is-missing {
@@ -1206,10 +1207,6 @@ p {
   .hero__art-frame {
     min-height: 286px;
     border-radius: 10px;
-  }
-  .hero__person {
-    left: -5%;
-    width: 110%;
   }
   .art-caption {
     right: 14px;
