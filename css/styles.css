@@ -495,9 +495,7 @@ p {
   font: 400 48px/1.25 var(--font-heading);
   letter-spacing: 0;
 }
-.reviews__heading-green {
-  color: var(--green);
-}
+
 .carousel {
   position: relative;
 }
