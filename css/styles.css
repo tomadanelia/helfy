@@ -638,22 +638,23 @@ p {
 .steps-carousel {
   width: min(100%, 1450px);
   margin: 0 auto;
-  background: url("../assets/stepCardsback.svg") center / contain no-repeat;
+  background: url("../assets/stepCardsBack.svg") center / cover no-repeat;
 }
 .steps-carousel .carousel__viewport {
   overflow: visible;
 }
 .steps-carousel .carousel__track {
   width: 100%;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.14fr) minmax(0, 1fr);
   align-items: center;
   gap: 24px;
 }
 .step-card {
   position: relative;
-  width: min(31%, 438px);
+  width: 100%;
   min-height: 580px;
-  flex: 0 0 min(31%, 438px);
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -666,12 +667,10 @@ p {
     rgba(255, 255, 255, 0.52)
   );
   box-shadow: 0 22px 48px rgba(37, 101, 44, 0.17);
-  backdrop-filter: blur(12px);
 }
 .step-card:nth-child(2) {
-  width: min(36%, 500px);
+  width: 100%;
   min-height: 625px;
-  flex-basis: min(36%, 500px);
 }
 .step-card__number {
   position: absolute;
@@ -1384,6 +1383,7 @@ p {
   }
   .steps-carousel .carousel__track {
     width: max-content;
+    display: flex;
     justify-content: flex-start;
     align-items: stretch;
     gap: 24px;
