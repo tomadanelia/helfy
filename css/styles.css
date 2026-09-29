@@ -656,7 +656,7 @@ p {
 .step-card {
   position: relative;
   width: 100%;
-  min-height: 580px;
+  min-height: 520px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -1099,6 +1099,9 @@ p {
     min-height: 530px;
     padding-right: 17px;
     padding-left: 17px;
+  }
+  .step-card:not(:nth-child(2)) {
+    min-height: 480px;
   }
   .step-card h3 {
     font-size: 20px;
