@@ -15,7 +15,22 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
   const track = carousel.querySelector(".carousel__track");
   const cards = [...track.children];
   const dotsContainer = carousel.querySelector(".carousel-dots");
+  const isInfiniteReviews = carousel.dataset.carousel === "reviews";
   let activeIndex = 0;
+  let carouselPosition = cards.length;
+
+  if (isInfiniteReviews) {
+    cards.forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.append(clone);
+    });
+    [...cards].reverse().forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.prepend(clone);
+    });
+  }
 
   cards.forEach((_, index) => {
     const dot = document.createElement("button");
@@ -38,9 +53,7 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
 
   function maxIndex() {
     if (carousel.dataset.carousel === "reviews") {
-      return (
-        cards.length - (window.matchMedia("(max-width: 700px)").matches ? 2 : 1)
-      );
+      return cards.length - 1;
     }
     if (
       carousel.dataset.carousel === "steps" &&
@@ -55,41 +68,67 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
 
   function update() {
     const lastIndex = maxIndex();
-    activeIndex = Math.min(activeIndex, lastIndex);
-    const isFinalMobileReview =
-      carousel.dataset.carousel === "reviews" &&
-      window.matchMedia("(max-width: 700px)").matches &&
-      activeIndex === lastIndex;
-    const offset =
-      carousel.dataset.carousel === "steps" && lastIndex === 0
+    if (!isInfiniteReviews) activeIndex = Math.min(activeIndex, lastIndex);
+    const offset = isInfiniteReviews
+      ? carouselPosition * getStep()
+      : carousel.dataset.carousel === "steps" && lastIndex === 0
         ? 0
-        : isFinalMobileReview
-          ? Math.max(0, track.scrollWidth - viewport.clientWidth)
-          : Math.min(
-              activeIndex * getStep(),
-              Math.max(0, track.scrollWidth - viewport.clientWidth),
-            );
+        : Math.min(
+            activeIndex * getStep(),
+            Math.max(0, track.scrollWidth - viewport.clientWidth),
+          );
     track.style.transform = `translateX(${-offset}px)`;
     dots.forEach((dot, index) => {
       const selected = index === activeIndex;
       dot.setAttribute("aria-current", String(selected));
-      dot.hidden = index > lastIndex;
+      dot.hidden = !isInfiniteReviews && index > lastIndex;
     });
     carousel.querySelectorAll("[data-direction]").forEach((button) => {
       button.disabled =
-        (activeIndex === 0 && button.dataset.direction === "-1") ||
-        (activeIndex === lastIndex && button.dataset.direction === "1");
+        !isInfiniteReviews &&
+        ((activeIndex === 0 && button.dataset.direction === "-1") ||
+          (activeIndex === lastIndex && button.dataset.direction === "1"));
     });
   }
 
   function moveTo(index) {
-    activeIndex = Math.max(0, Math.min(index, maxIndex()));
+    activeIndex = isInfiniteReviews
+      ? Math.max(0, Math.min(index, cards.length - 1))
+      : Math.max(0, Math.min(index, maxIndex()));
+    if (isInfiniteReviews) carouselPosition = cards.length + activeIndex;
     update();
+  }
+
+  function moveBy(direction) {
+    if (!isInfiniteReviews) {
+      moveTo(activeIndex + direction);
+      return;
+    }
+    carouselPosition += direction;
+    activeIndex = (activeIndex + direction + cards.length) % cards.length;
+    update();
+  }
+
+  if (isInfiniteReviews) {
+    track.addEventListener("transitionend", (event) => {
+      if (event.target !== track || event.propertyName !== "transform") return;
+      if (carouselPosition >= cards.length * 2) {
+        carouselPosition = cards.length;
+      } else if (carouselPosition < cards.length) {
+        carouselPosition = cards.length * 2 - 1;
+      } else {
+        return;
+      }
+      track.style.transition = "none";
+      update();
+      track.getBoundingClientRect();
+      track.style.removeProperty("transition");
+    });
   }
 
   carousel.querySelectorAll("[data-direction]").forEach((button) => {
     button.addEventListener("click", () =>
-      moveTo(activeIndex + Number(button.dataset.direction)),
+      moveBy(Number(button.dataset.direction)),
     );
   });
 
@@ -105,7 +144,7 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
     "touchend",
     (event) => {
       const delta = touchStartX - event.changedTouches[0].clientX;
-      if (Math.abs(delta) > 40) moveTo(activeIndex + (delta > 0 ? 1 : -1));
+      if (Math.abs(delta) > 40) moveBy(delta > 0 ? 1 : -1);
     },
     { passive: true },
   );
