@@ -446,13 +446,13 @@ p {
 }
 .hero__person {
   position: absolute;
-  z-index: 1;
   bottom: 0;
-  left: -8%;
-  width: 109%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
   height: 100%;
+  max-width: 100%;
   object-fit: contain;
-  object-position: bottom center;
 }
 .hero__person:not([src]),
 .asset-image.is-missing {
@@ -498,9 +498,12 @@ p {
 }
 .reviews h2 {
   margin: 0;
-  color: var(--green);
+  color: #000;
   font: 400 48px/1.25 var(--font-heading);
   letter-spacing: 0;
+}
+.reviews__heading-green {
+  color: var(--green);
 }
 .carousel {
   position: relative;
